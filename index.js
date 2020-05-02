@@ -82,23 +82,49 @@ class Car {
     this.odometer = 0;
   }
   fill(gallons) {
-    this.tank = this.tank + gallons
-    this.maxRange = this.tank * this.milesPerGallon
+    this.tank += gallons
   }
   drive(distance) {
-    console.log(this.maxRange);
-    this.tank = Math.floor(this.tank - (distance / this.milesPerGallon))
-    this.odometer = Math.floor(this.odometer + distance);
-    console.log(this.odometer)
-    if (distance <= this.maxRange) {
-      return this.tank, this.odometer
+    this.gasNeeded = distance / this.milesPerGallon
+    this.maxRange = this.tank * this.milesPerGallon
+    this.odometer = this.odometer + distance
+    let gallonsUsed = distance / this.milesPerGallon
+    this.tank -= gallonsUsed
+    if (this.tank < 0) {
+      let newdistance = Math.floor(this.tank / this.milesPerGallon) * -1;
+      this.odometer -= newdistance;
+      this.tank = 0
+      return `I ran out of fuel at ${distance - newdistance}`
     }
-    else {
-      return `I ran out of fuel at ${distance - this.maxRange} miles!`
-    }
+    else
+      return (this.tank - gallonsUsed), (this.odometer + distance)
   }
 }
 
+//2nd draft
+// console.log("this tank " + this.tank)
+// console.log("distance " + distance)
+// console.log("max Range " + this.maxRange)
+// console.log("gas needed " + this.gasNeeded)
+// console.log("odometer " + this.odometer)
+// console.log(`I ran out of fuel at ${distance - this.maxRange} miles!`)
+// if (this.gasNeeded > this.tank) {
+//   this.tank = (this.tank - Math.floor(this.gasNeeded))
+//   return `I ran out of fuel at ${distance - this.maxRange} miles!`
+// }
+// else
+//   return (this.tank - this.gasNeeded), (this.odometer = this.odometer + distance)
+
+// 1st draft
+// this.tank = Math.floor(this.tank - (distance / this.milesPerGallon))
+// this.odometer = Math.floor(this.odometer + distance);
+// console.log(this.odometer)
+// if (distance <= this.maxRange) {
+//   return this.tank, this.odometer
+// }
+// else {
+//   return `I ran out of fuel at ${distance - this.maxRange} miles!`
+// }
 
 /*
   TASK 3
